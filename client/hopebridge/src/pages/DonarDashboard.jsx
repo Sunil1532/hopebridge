@@ -9,7 +9,7 @@ const DonorDashboard = () => {
   useEffect(() => {
     const fetchChildren = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/volunteer/children");
+        const res = await fetch("https://hopebridge-j1jq.onrender.com"); // ✅ Updated URL
         if (!res.ok) throw new Error("Failed to fetch children data");
         const data = await res.json();
         setChildrenData(data);

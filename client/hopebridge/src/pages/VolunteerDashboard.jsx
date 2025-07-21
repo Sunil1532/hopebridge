@@ -15,7 +15,7 @@ export default function VolunteerDashboard() {
   useEffect(() => {
     const fetchChildren = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/volunteer/children");
+        const res = await axios.get("https://hopebridge-j1jq.onrender.com/api/volunteer/children"); // ✅ updated
         setChildren(res.data);
       } catch (err) {
         console.error("Error fetching children:", err);
@@ -101,7 +101,7 @@ export default function VolunteerDashboard() {
                     <td className="p-3">
                       {child.photo ? (
                         <img
-                          src={`http://localhost:5000/uploads/${child.photo}`}
+                          src={`https://hopebridge-j1jq.onrender.com/uploads/${child.photo}`} // ✅ updated
                           alt={child.name}
                           className="w-12 h-12 object-cover rounded-full"
                         />

@@ -5,7 +5,7 @@ import Header from '../components/admin/Header';
 import ChildList from '../components/admin/ChildList';
 import ChildForm from '../components/admin/ChildForm';
 
-const API_BASE = 'http://localhost:5000/api/admin/children';
+const API_BASE = `${import.meta.env.VITE_API_BASE_URL}/api/admin/children`;
 
 const AdminDashboard = () => {
   const [children, setChildren] = useState([]);
@@ -100,7 +100,6 @@ const AdminDashboard = () => {
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-        {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
@@ -117,7 +116,6 @@ const AdminDashboard = () => {
           </button>
         </div>
 
-        {/* Quick Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div className="bg-white shadow rounded-lg p-4 text-center">
             <h2 className="text-xl font-semibold text-indigo-700">{total}</h2>
@@ -133,7 +131,6 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Search */}
         <div className="mb-6">
           <input
             type="text"
@@ -144,7 +141,6 @@ const AdminDashboard = () => {
           />
         </div>
 
-        {/* Child List */}
         {filteredChildren.length > 0 ? (
           <ChildList children={filteredChildren} onEdit={handleEdit} onDelete={handleDelete} />
         ) : (
@@ -153,10 +149,8 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {/* Divider */}
         <div className="my-10 border-t border-gray-300"></div>
 
-        {/* Add/Edit Form */}
         <Transition
           show={showForm}
           as={Fragment}
@@ -179,7 +173,6 @@ const AdminDashboard = () => {
         </Transition>
       </main>
 
-      {/* Footer */}
       <footer className="bg-white border-t mt-10">
         <div className="max-w-7xl mx-auto px-4 py-6 text-sm text-gray-500 text-center">
           © {new Date().getFullYear()} HopeBridge Admin Panel. All rights reserved.
