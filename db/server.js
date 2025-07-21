@@ -22,12 +22,17 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// ✅ Root Route for Render Test
+app.get('/', (req, res) => {
+  res.send('🚀 HopeBridge Backend is Running');
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/volunteer/children', volunteerChildRoutes);
 app.use('/api/admin/children', adminChildRoutes);
 
-// Global error handler (optional)
+// Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({ message: err.message || "Internal Server Error" });
