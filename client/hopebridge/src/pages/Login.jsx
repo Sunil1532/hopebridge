@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useUser } from "../context/UserContext";
 import { jwtDecode } from "jwt-decode";
+import { BACKEND_URL } from "../config";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,14 +14,14 @@ const Login = () => {
     password: "",
     role: "donor",
   });
+
   const [error, setError] = useState("");
   const googleButtonRef = useRef(null);
 
   useEffect(() => {
     if (window.google && googleButtonRef.current) {
       window.google.accounts.id.initialize({
-        client_id:
-          "116025550167-7qc6i9qp772if499idhot9h384pfplad.apps.googleusercontent.com",
+        client_id: "116025550167-7qc6i9qp772if499idhot9h384pfplad.apps.googleusercontent.com",
         callback: handleGoogleResponse,
       });
 
@@ -33,9 +34,8 @@ const Login = () => {
 
   const handleGoogleResponse = (response) => {
     const userObject = jwtDecode(response.credential);
-    console.log("Google user info:", userObject);
 
-    fetch("https://hopebridge-j1jq.onrender.com/api/auth/google-login", {
+    fetch(`${BACKEND_URL}/api/auth/google-login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ tokenId: response.credential }),
@@ -48,7 +48,6 @@ const Login = () => {
           setUser(data.user);
           setError("");
 
-          // 🔁 Redirecting properly (nri => donor)
           const role = data.user.role === "nri" ? "donor" : data.user.role;
           navigate(`/${role}`);
         } else {
@@ -66,13 +65,13 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://hopebridge-j1jq.onrender.com/api/auth/login", {
+      const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: form.email,
           password: form.password,
-          role: form.role, // ✅ Correct role
+          role: form.role,
         }),
       });
 
@@ -84,7 +83,6 @@ const Login = () => {
         setUser(data.user);
         setError("");
 
-        // 🔁 Redirect properly (nri => donor)
         const role = data.user.role === "nri" ? "donor" : data.user.role;
         navigate(`/${role}`);
       } else {
